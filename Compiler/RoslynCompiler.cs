@@ -54,6 +54,10 @@ public class RoslynCompiler : MarshalByRefObject, ICompiler
             .Concat(customReferences);
 
         var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp13);
+        if (DebugBuild)
+        {
+            options = options.WithPreprocessorSymbols("DEBUG");
+        }
 
         CSharpCompilation compilation = CSharpCompilation.Create(
             assemblyName,
